@@ -36,11 +36,15 @@ public class LinkedList {
                 tail = newNode;
             }
         }
-        System.out.println("Enter the value of n");
-        int n=scanner.nextInt();
+        System.out.println("Enter the value of n:");
+        int n = scanner.nextInt();
 
-        ListNode head1=removeNthFromEnd(head,n);
-        printLinkedList(head1);
+        if (n <= 0) {
+            System.out.println("n must be a positive integer.");
+        } else {
+            ListNode head1 = removeNthFromEnd(head, n);
+            printLinkedList(head1);
+        }
 
         scanner.close();
     }
@@ -53,27 +57,41 @@ public class LinkedList {
         }
         System.out.println("null");
     }
-    
+
     public static ListNode removeNthFromEnd(ListNode head, int n) {
-    ListNode dummy = new ListNode(0);
-    dummy.next = head;
-    ListNode fast = dummy;
-    ListNode slow = dummy;
-    
-    // Move the fast pointer n nodes ahead.
-    for (int i = 0; i <= n; i++) {
-        fast = fast.next;
+        ListNode dummy = new ListNode(0);  // Create a dummy node
+        dummy.next = head;
+        ListNode fast = dummy;
+        ListNode slow = dummy;
+
+        // First, calculate the length of the linked list
+        int length = 0;
+        ListNode current = head;
+        while (current != null) {
+            length++;
+            current = current.next;
+        }
+
+        // Check if n is larger than the length of the list
+        if (n > length) {
+            System.out.println("n is larger than the length of the list. No removal performed.");
+            return head;
+        }
+
+        // Move the fast pointer n steps ahead
+        for (int i = 0; i < n; i++) {
+            fast = fast.next;
+        }
+
+        // Move both pointers until fast reaches the end
+        while (fast.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        // Remove the nth node from the end
+        slow.next = slow.next.next;
+
+        return dummy.next;
     }
-    
-    // Move both pointers until the fast pointer reaches the end.
-    while (fast != null) {
-        fast = fast.next;
-        slow = slow.next;
-    }
-    
-    // Remove the nth node from the end by adjusting the pointers.
-    slow.next = slow.next.next;
-    
-    return dummy.next; 
-}
 }
