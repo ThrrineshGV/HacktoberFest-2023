@@ -1,3 +1,9 @@
+</dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-mongodb</artifactId>
+</dependency>
+
+
 package com.demoproject.demoapplication.model;
 
 
@@ -20,3 +26,9 @@ public class Task {
     private int storyPoint;
 }
 
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.20</version> <!-- or latest version -->
+    <scope>provided</scope>
+</dependency>
