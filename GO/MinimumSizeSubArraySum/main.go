@@ -27,7 +27,7 @@ Output -
 6.      minSubArrayLen(15, [5, 4, 9, 8, 11, 3, 7, 12, 15, 44]): 1
 ----------------------------------------------------------------------------------------------------
 
-Solution
+Solution:
 We use the windowSize variable to store the size of the minimum subarray, initializing it to MaxInt64.
 We use a start variable to track the left end of the subarray. Initially, we’ll set it to 0.
 We loop over the input array using an end variable to track the right end of the subarray.
@@ -39,34 +39,32 @@ We slide the starting point of the subarray forward and check the sum from that 
 checking the condition and updating windowSize where applicable.
 We repeat the process until the end of the array is reached. If the required minimum subarray is present, we return its length.
 */
+
 func minSubArrayLen(target int, nums []int) int {
-	// write your code here
-	// your code will replace this placeholder return statement
-	// Initializing windowSize to a max number
+	// Initializing windowSize to a large value
 	windowSize := math.MaxInt64
 
 	// Initialize start pointer to 0 and sum to 0
 	start, totalSum := 0, 0
 
-	for end, _ := range nums {
+	for end := range nums {
 		totalSum += nums[end]
-		// Check if we can remove elements from the start side of the subarray
-		// while still satisfying the target condition
-		for totalSum >= target {
-			// Finding size of current subarray
+		// Check if we can shrink the window from the start
+		while totalSum >= target {
 			currSubArrSize := (end + 1) - start
 			windowSize = min(windowSize, currSubArrSize)
 			totalSum -= nums[start]
-			start += 1
+			start++
 		}
 	}
+	// If we found a subarray, return the window size, otherwise return 0
 	if windowSize != math.MaxInt64 {
 		return windowSize
-	} else {
-		return 0
 	}
+	return 0
 }
 
+// Utility function to get the minimum value
 func min(v1 int, v2 int) int {
 	if v1 < v2 {
 		return v1
@@ -85,14 +83,5 @@ func main() {
 	}
 	numsList := [][]int{
 		{2, 3, 1, 2, 4, 3},
-		{1, 4, 4}, {1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 2, 3, 4}, {1, 2, 1, 3},
-		{5, 4, 9, 8, 11, 3, 7, 12, 15, 44},
-	}
-	for i, target := range targets {
-		result := minSubArrayLen(target, numsList[i])
-		fmt.Printf("%d.\tminSubArrayLen(%d, %s): %d\n", i+1, target,
-			strings.Replace(fmt.Sprint(numsList[i]), " ", ", ", -1), result)
-		fmt.Printf("%s\n", strings.Repeat("-", 100))
-	}
-}
+		{1, 4, 4},
+		{1, 1, 
